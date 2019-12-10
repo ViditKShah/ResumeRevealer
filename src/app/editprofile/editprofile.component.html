@@ -1,0 +1,56 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>Your Profile</h1>
+    </div>
+    <div class="col-sm-8">
+      <!-- <div class="alert alert-info">
+          <strong>Information:</strong> You have made changes. 
+          Any unsaved changes will be lost!
+        </div> -->
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="tab-panel">
+        <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser(user)">
+          <h4>Default Filter Criteria</h4>
+          <select
+            class="form-control"
+            id="filterCriteria"
+            name="filterCriteria"
+            [(ngModel)]="user.filterCriteria"
+            required
+          >
+            <option [value]="null">Select filter</option>
+            <option *ngFor="let filter of filters" [value]="filter.value">
+              {{ filter.display }}
+            </option>
+          </select>
+          <br />
+          <h4>Default Home Page</h4>
+          <select
+            class="form-control"
+            id="defaultScreen"
+            name="defaultScreen"
+            [(ngModel)]="user.defaultScreen"
+            required
+          >
+            <option [value]="null">Select home page</option>
+            <option *ngFor="let homePage of homePages" [value]="homePage.value">
+              {{ homePage.display }}
+            </option>
+          </select>
+          <br />
+          <input
+            type="submit"
+            class="btn btn-info btn-lg"
+            value="Update"
+            [disabled]="!editForm.valid"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

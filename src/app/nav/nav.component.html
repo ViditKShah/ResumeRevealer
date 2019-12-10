@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="'#'">Resume Revealer</a>
+
+    <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/candidates']">Candidates</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/favourites']">Favourites</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/scheduled']">Scheduled</a>
+      </li>
+      <input
+        type="text"
+        id="searchCriteria"
+        name="searchCriteria"
+        [(ngModel)]="searchCriteria"
+        placeholder="Search here..."
+        style="border-radius:
+      25px;margin-left:40px;width: 20rem; padding: 2px;border:1px solid white;"
+      />
+      <button class="btn btn-primary btn-dark btn-md ml-2" (click)="search()">
+        Search
+      </button>
+    </ul>
+
+    <div *ngIf="loggedIn()" class="dropdown" dropdown>
+      <a class="dropdown-toggle text-light" dropdownToggle>
+        Welcome {{ authService.currentUser.name | titlecase }}!
+      </a>
+
+      <div class="dropdown-menu mt-3 mr-2" *dropdownMenu>
+        <a class="dropdown-item" [routerLink]="['/editprofile']">
+          <i class="fa fa-user"></i> Edit Profile
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="logOut()">
+          <i class="fa fa-sign-out"></i> Logout
+        </a>
+      </div>
+    </div>
+
+    <form
+      *ngIf="!loggedIn()"
+      #loginForm="ngForm"
+      class="form-inline my-2 my-lg-0"
+      (ngSubmit)="login()"
+    >
+      <input
+        class="form-control mr-sm-2"
+        type="text"
+        name="name"
+        #name="ngModel"
+        placeholder="Name"
+        required
+        [(ngModel)]="model.name"
+      />
+      <input
+        class="form-control mr-sm-2"
+        type="password"
+        name="password"
+        #password="ngModel"
+        placeholder="Password"
+        required
+        [(ngModel)]="model.password"
+      />
+      <button
+        [disabled]="!loginForm.valid"
+        class="btn btn-success my-2 my-sm-0"
+        type="submit"
+      >
+        Login
+      </button>
+    </form>
+  </div>
+</nav>

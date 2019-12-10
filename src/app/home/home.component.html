@@ -1,0 +1,148 @@
+<div class="container mt-5">
+  <div *ngIf="!registerMode && !postRegisterMode" style="text-align: center">
+    <h1>Find the best from the rest!</h1>
+    <p *ngIf="!registerMode" class="lead">
+      Come on in to get the right candidate for your requirements... All you
+      need to do is sign up!
+    </p>
+    <div class="text-center">
+      <button
+        class="btn btn-info btn-dark btn-lg mr-2"
+        (click)="registerModeOn()"
+      >
+        Register Now!
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="registerMode && !postRegisterMode" class="container">
+    <h1 class="text-center">Register Form</h1>
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <div class="alert alert-info">
+          <strong>Information:</strong> All fields are mandatory.
+        </div>
+        <form
+          #registerForm="ngForm"
+          id="registerForm"
+          (ngSubmit)="registerUser(user)"
+        >
+          <div>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              placeholder="Enter your name"
+              [(ngModel)]="user.name"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <label for="password">Password</label>
+            <input
+              type="text"
+              class="form-control"
+              name="password"
+              placeholder="Enter a password"
+              [(ngModel)]="user.password"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <label for="emailId">Email Id</label>
+            <input
+              type="email"
+              class="form-control"
+              name="emailId"
+              placeholder="Enter your email"
+              [(ngModel)]="user.emailId"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <label for="role">Role</label>
+            <select
+              class="form-control"
+              id="role"
+              name="role"
+              [(ngModel)]="user.role"
+              required
+            >
+              <option [value]="null" selected>Select role</option>
+              <option *ngFor="let role of roles" [value]="role.value">
+                {{ role.display }}
+              </option>
+            </select>
+          </div>
+          <br />
+          <div>
+            <label for="filterCriteria">Default Filter Criteria</label>
+            <select
+              class="form-control"
+              id="filterCriteria"
+              name="filterCriteria"
+              [(ngModel)]="user.filterCriteria"
+              required
+            >
+              <option [value]="null" selected>Select filter</option>
+              <option *ngFor="let filter of filters" [value]="filter.value">
+                {{ filter.display }}
+              </option>
+            </select>
+          </div>
+          <br />
+          <div>
+            <label for="defaultScreen">Default Home Page</label>
+            <select
+              class="form-control"
+              id="defaultScreen"
+              name="defaultScreen"
+              [(ngModel)]="user.defaultScreen"
+              required
+            >
+              <option [value]="null" selected>Select home page</option>
+              <option
+                *ngFor="let homePage of homePages"
+                [value]="homePage.value"
+              >
+                {{ homePage.display }}
+              </option>
+            </select>
+          </div>
+          <br />
+          <div class="text-center">
+            <input
+              type="submit"
+              class="btn btn-primary btn-dark btn-lg mr-2"
+              value="Register"
+              [disabled]="!registerForm.valid"
+            />
+          </div>
+          <br />
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <span *ngIf="postRegisterMode" class="lead text-center">
+    <h1>Very well!</h1>
+    <h5>
+      Now that you are a part of the system, let's unlock the features provided
+      by Resume Revealer. <br />
+    </h5>
+    <br />
+    <div class="text-center">
+      <button
+        class="btn btn-primary btn-dark btn-lg"
+        href="#"
+        style="cursor: default;"
+      >
+        Login above to continue!
+      </button>
+    </div>
+  </span>
+</div>

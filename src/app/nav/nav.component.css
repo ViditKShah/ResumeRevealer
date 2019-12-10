@@ -1,0 +1,24 @@
+.dropdown-toggle,
+.dropdown-item {
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  width: 100%;
+}
+
+#userMainPhoto {
+  max-height: 50px;
+  border: 2px solid white;
+  display: inline;
+}
+
+.active {
+  border-bottom: 2px solid white;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+  opacity: 1 !important;
+}

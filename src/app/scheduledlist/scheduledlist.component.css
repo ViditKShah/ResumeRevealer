@@ -1,0 +1,64 @@
+.statusDot1 {
+  position: relative;
+  top: 5px;
+  left: -5px;
+  height: 3em;
+  width: 3em;
+  background-color: #dd4814;
+  border-radius: 50%;
+  display: inline-block;
+  z-index: 1;
+  border: 2px solid white;
+  cursor: default;
+}
+
+.statusDot2 {
+  position: relative;
+  left: 18%;
+  height: 3em;
+  width: 3em;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #dd4814;
+  border-radius: 50%;
+  display: inline-block;
+  z-index: 1;
+  border: 2px solid white;
+}
+
+.statusDot3 {
+  position: relative;
+  top: 5px;
+  left: 33%;
+  height: 3em;
+  width: 3em;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  z-index: 1;
+  border: 2px solid white;
+}
+
+.statusDot4 {
+  position: relative;
+  top: 5px;
+  left: 50%;
+  height: 3em;
+  width: 3em;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  z-index: 1;
+  border: 2px solid white;
+  cursor: default;
+}
+
+.progress-bar {
+  background: #4bb543;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

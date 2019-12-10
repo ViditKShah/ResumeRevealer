@@ -1,0 +1,434 @@
+<div class="text-center mt-4">
+  <h2>
+    All Candidates
+    {{ this.candidates ? "(" + this.candidates.length + ")" : "" }}
+  </h2>
+</div>
+
+<mat-tab-group *ngIf="displayTabView">
+  <mat-tab label="All">
+    <div class="container mt-4">
+      <br />
+      <div class="row">
+        <div
+          *ngFor="let candidate of candidates"
+          class="col-lg-3 col-md-3 col-sm-6"
+        >
+          <div class="card mb-4">
+            <div class="card-img-wrapper img_wrp">
+              <img
+                class="card-img-top"
+                src="{{ '../../../assets/candidate.png' }}"
+                alt=""
+              />
+              <button class="close btn btn-primary" [routerLink]="['/']">
+                <i class="fa fa-close"></i>
+              </button>
+              <span
+                class="statusDot"
+                [ngStyle]="{
+                  backgroundColor: getStatusDotColor(candidate.status)
+                }"
+              ></span>
+              <div class="badge">{{ candidate.yearsOfExperience }}</div>
+              <ul class="list-inline member-icons animate text-center">
+                <li class="list-inline-item">
+                  <button
+                    class="btn btn-primary"
+                    (click)="
+                      addToFavourites(candidate.emailId, candidate.isfavorite)
+                    "
+                  >
+                    <i
+                      [ngClass]="
+                        candidate.isfavorite ? 'fa fa-heart' : 'fa fa-heart-o'
+                      "
+                    ></i>
+                  </button>
+                </li>
+                <li class="list-inline-item">
+                  <button
+                    class="btn btn-primary"
+                    (click)="openScheduledModalDialog(candidate)"
+                  >
+                    <i class="fa fa-calendar-check-o"></i>
+                  </button>
+                </li>
+                <li class="list-inline-item">
+                  <button
+                    class="btn btn-primary"
+                    (click)="openShareModalDialog(candidate)"
+                  >
+                    <i class="fa fa-share"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-md-12" style="display: inline-flex;">
+                <div class="col-md-8 mt-1 text-left">
+                  <h5 class="card-title">
+                    {{ candidate.firstName | titlecase }} <br />
+                    {{ candidate.lastName | titlecase }}
+                  </h5>
+                  <h6 class="card-text text-muted candidateDesig">
+                    {{ candidate.designation }}
+                  </h6>
+                </div>
+                <div>
+                  <circle-progress
+                    [percent]="candidate.rating"
+                    [radius]="25"
+                    [outerStrokeColor]="'#78C000'"
+                    [animation]="true"
+                    [animationDuration]="300"
+                    [showTitle]="true"
+                    [showSubtitle]="false"
+                    [showInnerStroke]="false"
+                  ></circle-progress>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab
+    [label]="candidating.team"
+    *ngFor="let candidating of designationCandidates"
+  >
+    <div class="container mt-4">
+      <br />
+      <div class="row">
+        <div
+          *ngFor="let candidate of candidating.name"
+          class="col-lg-3 col-md-3 col-sm-6"
+        >
+          <div class="card mb-4">
+            <div class="card-img-wrapper img_wrp">
+              <img
+                class="card-img-top"
+                src="{{ '../../../assets/candidate.png' }}"
+                alt=""
+              />
+              <button class="close btn btn-primary" [routerLink]="['/']">
+                <i class="fa fa-close"></i>
+              </button>
+              <span
+                class="statusDot"
+                [ngStyle]="{
+                  backgroundColor: getStatusDotColor(candidate.status)
+                }"
+              ></span>
+              <div class="badge">{{ candidate.yearsOfExperience }}</div>
+              <ul class="list-inline member-icons animate text-center">
+                <li class="list-inline-item">
+                  <button
+                    class="btn btn-primary"
+                    (click)="
+                      addToFavourites(candidate.emailId, candidate.isfavorite)
+                    "
+                  >
+                    <i
+                      [ngClass]="
+                        candidate.isfavorite ? 'fa fa-heart' : 'fa fa-heart-o'
+                      "
+                    ></i>
+                  </button>
+                </li>
+                <li class="list-inline-item">
+                  <button
+                    class="btn btn-primary"
+                    (click)="openScheduledModalDialog(candidate)"
+                  >
+                    <i class="fa fa-calendar-check-o"></i>
+                  </button>
+                </li>
+                <li class="list-inline-item">
+                  <button
+                    class="btn btn-primary"
+                    (click)="openShareModalDialog(candidate)"
+                  >
+                    <i class="fa fa-share"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-md-12" style="display: inline-flex;">
+                <div class="col-md-8 mt-1 text-left">
+                  <h5 class="card-title">
+                    {{ candidate.firstName | titlecase }} <br />
+                    {{ candidate.lastName | titlecase }}
+                  </h5>
+                  <h6 class="card-text text-muted candidateDesig">
+                    {{ candidate.designation }}
+                  </h6>
+                </div>
+                <div>
+                  <circle-progress
+                    [percent]="candidate.rating"
+                    [radius]="25"
+                    [outerStrokeColor]="'#78C000'"
+                    [animation]="true"
+                    [animationDuration]="300"
+                    [showTitle]="true"
+                    [showSubtitle]="false"
+                    [showInnerStroke]="false"
+                  ></circle-progress>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<div *ngIf="!displayTabView" class="container mt-4">
+  <br />
+  <div class="row">
+    <div
+      *ngFor="let candidate of candidates"
+      class="col-lg-3 col-md-3 col-sm-6"
+    >
+      <div class="card mb-4">
+        <div class="card-img-wrapper img_wrp">
+          <img
+            class="card-img-top"
+            src="{{ '../../../assets/candidate.png' }}"
+            alt=""
+          />
+          <button class="close btn btn-primary" [routerLink]="['/']">
+            <i class="fa fa-close"></i>
+          </button>
+          <span
+            class="statusDot"
+            [ngStyle]="{ backgroundColor: getStatusDotColor(candidate.status) }"
+          ></span>
+          <div class="badge">{{ candidate.yearsOfExperience }}</div>
+          <ul class="list-inline member-icons animate text-center">
+            <li class="list-inline-item">
+              <button
+                class="btn btn-primary"
+                (click)="
+                  addToFavourites(candidate.emailId, candidate.isfavorite)
+                "
+              >
+                <i
+                  [ngClass]="
+                    candidate.isfavorite ? 'fa fa-heart' : 'fa fa-heart-o'
+                  "
+                ></i>
+              </button>
+            </li>
+            <li class="list-inline-item">
+              <button
+                class="btn btn-primary"
+                (click)="openScheduledModalDialog(candidate)"
+              >
+                <i class="fa fa-calendar-check-o"></i>
+              </button>
+            </li>
+            <li class="list-inline-item">
+              <button
+                class="btn btn-primary"
+                (click)="openShareModalDialog(candidate)"
+              >
+                <i class="fa fa-share"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <div class="col-md-12" style="display: inline-flex;">
+            <div class="col-md-8 mt-1 text-left">
+              <h5 class="card-title">
+                {{ candidate.firstName | titlecase }} <br />
+                {{ candidate.lastName | titlecase }}
+              </h5>
+              <h6 class="card-text text-muted candidateDesig">
+                {{ candidate.designation }}
+              </h6>
+            </div>
+            <div>
+              <circle-progress
+                [percent]="candidate.rating"
+                [radius]="25"
+                [outerStrokeColor]="'#78C000'"
+                [animation]="true"
+                [animationDuration]="300"
+                [showTitle]="true"
+                [showSubtitle]="false"
+                [showInnerStroke]="false"
+              ></circle-progress>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{ display: scheduledDisplay }"></div>
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{ display: scheduledDisplay }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="closeScheduledModalDialog()"
+          >
+            <i class="fa fa-close mr-1 mt-1"></i>
+          </button>
+          Schedule Interview
+        </h4>
+      </div>
+
+      <div class="modal-body">
+        <form
+          #scheduleForm="ngForm"
+          id="scheduleForm"
+          (ngSubmit)="scheduleInterview(schedule)"
+        >
+          <div>
+            <label for="scheduleDateTime">Date & Time</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              name="scheduleDateTime"
+              placeholder="Schedule Date & Time"
+              [(ngModel)]="schedule.scheduleDateTime"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <label for="scheduleInterviewer">Interviewer</label>
+            <select
+              class="form-control"
+              name="scheduleInterviewer"
+              placeholder="Interviewer Name"
+              [(ngModel)]="schedule.interviewer"
+              required
+            >
+              <option
+                *ngFor="let interviewer of interviewers"
+                [value]="interviewer.id"
+              >
+                {{ interviewer.name }}
+              </option>
+            </select>
+          </div>
+          <br />
+          <input
+            style="float: right;"
+            type="submit"
+            class="btn btn-info btn-lg"
+            value="Schedule"
+            [disabled]="!scheduleForm.valid"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{ display: shareDisplay }"></div>
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{ display: shareDisplay }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="closeShareModalDialog()"
+          >
+            <i class="fa fa-close mr-1 mt-1"></i>
+          </button>
+          Send Resume By Email
+        </h4>
+      </div>
+
+      <div class="modal-body">
+        <form
+          #shareForm="ngForm"
+          id="shareForm"
+          (ngSubmit)="shareResume(share)"
+        >
+          <div>
+            <label for="emailTo">Email To</label>
+            <input
+              type="text"
+              class="form-control"
+              name="emailTo"
+              placeholder="Email To"
+              [(ngModel)]="share.emailTo"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <label for="emailCc">Email Cc</label>
+            <input
+              type="text"
+              class="form-control"
+              name="emailCc"
+              placeholder="Email Cc"
+              [(ngModel)]="share.emailCc"
+            />
+          </div>
+          <br />
+          <div>
+            <label for="emailSubject">Email Subject</label>
+            <input
+              type="text"
+              class="form-control"
+              name="emailSubject"
+              placeholder="Email Subject"
+              [(ngModel)]="share.emailSubject"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <label for="emailBody">Email Body</label>
+            <textarea
+              class="form-control"
+              name="emailBody"
+              placeholder="Type your email..."
+              [(ngModel)]="share.emailBody"
+              required
+            >
+            </textarea>
+          </div>
+          <br />
+          <input
+            style="float: right;"
+            type="submit"
+            class="btn btn-info btn-lg"
+            value="Send"
+            [disabled]="!shareForm.valid"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,205 @@
+<div class="text-center mt-4">
+  <h2>
+    All Scheduled Candidates
+    {{
+      this.scheduledCandidates
+        ? "(" + this.scheduledCandidates.length + ")"
+        : ""
+    }}
+  </h2>
+</div>
+
+<div class="container mt-4">
+  <br />
+  <div *ngFor="let candidate of scheduledCandidates">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="jumbotron" style="background: lightgray;">
+          <div class="col-md-3 mb-3" style="float: left;margin-top:-25px;">
+            {{ candidate.firstName | titlecase }}
+            {{ candidate.lastName | titlecase }} <br />
+            {{ candidate.designation }} <br />
+            {{ candidate.scheduleDateTime | date:'full'}}
+          </div>
+          <button class="statusDot1">
+            <div style="color: white; font-size: 20px;">
+              <i class="fa fa-calendar"></i>
+            </div>
+          </button>
+          <button class="statusDot2">
+            <a
+              style="font-size: 20px; color: white;"
+              (click)="openL1ModalDialog(candidate)"
+              >L1</a
+            >
+          </button>
+          <button
+            class="statusDot3"
+            [ngStyle]="{
+              backgroundColor: setL2Background(
+                candidate.status,
+                candidate.l1Comments,
+                candidate.l2Comments
+              )
+            }"
+          >
+            <a
+              style="font-size: 20px; color: white;"
+              (click)="openL2ModalDialog(candidate)"
+              >L2</a
+            >
+          </button>
+          <button
+            class="statusDot4"
+            [ngStyle]="{
+              backgroundColor: setSelectedBackground(
+                candidate.status,
+                candidate.l1Comments,
+                candidate.l2Comments
+              )
+            }"
+          >
+            <div style="color: white; font-size: 20px;">
+              <i class="fa fa-thumbs-up"></i>
+            </div>
+          </button>
+          <div class="progress col-md-8" style="margin-top: -35px;">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              [ngStyle]="{
+                width: setWidth(
+                  candidate.status,
+                  candidate.l1Comments,
+                  candidate.l2Comments
+                ),
+                backgroundColor:
+                  candidate.status === '3' ? '#FF0000' : '#4bb543'
+              }"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{ display: l1Display }"></div>
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{ display: l1Display }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="closeL1ModalDialog()"
+          >
+            <i class="fa fa-close mr-1 mt-1"></i>
+          </button>
+          L1 Comments
+        </h4>
+      </div>
+
+      <div class="modal-body">
+        <form #l1Form="ngForm" id="l1Form" (ngSubmit)="l1Updates(scheduledL1)">
+          <div>
+            <label for="l1Comments">Comments</label>
+            <textarea
+              class="form-control"
+              name="l1Comments"
+              placeholder="Enter Your Comments..."
+              [(ngModel)]="scheduledL1.l1Comments"
+              [disabled]="this.authService.currentUser.role === '1'"
+              required
+            >
+            </textarea>
+          </div>
+          <br />
+          <input
+            (click)="rejectedClick('l1')"
+            style="float: left;cursor: default;"
+            type="submit"
+            class="btn btn-danger btn-lg"
+            value="Rejected"
+            [disabled]="!l1Form.valid"
+          />
+          <input
+            (click)="shortlistedClick('l1')"
+            style="float: right;cursor: default;"
+            type="submit"
+            class="btn btn-success btn-lg"
+            value="Shortlisted"
+            [disabled]="!l1Form.valid"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{ display: l2Display }"></div>
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{ display: l2Display }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="closeL2ModalDialog()"
+          >
+            <i class="fa fa-close mr-1 mt-1"></i>
+          </button>
+          L2 Comments
+        </h4>
+      </div>
+
+      <div class="modal-body">
+        <form #l2Form="ngForm" id="l2Form" (ngSubmit)="l2Updates(scheduledL2)">
+          <div>
+            <label for="l2Comments">Comments</label>
+            <textarea
+              class="form-control"
+              name="l2Comments"
+              placeholder="Enter Your Comments..."
+              [(ngModel)]="scheduledL2.l2Comments"
+              required
+              [disabled]="this.authService.currentUser.role === '1'"
+            >
+            </textarea>
+          </div>
+          <br />
+          <input
+            (click)="rejectedClick('l2')"
+            style="float: left;cursor: default;"
+            type="submit"
+            class="btn btn-danger btn-lg"
+            value="Rejected"
+            [disabled]="!l2Form.valid"
+          />
+          <input
+            (click)="shortlistedClick('l2')"
+            style="float: right;cursor: default;"
+            type="submit"
+            class="btn btn-success btn-lg"
+            value="Shortlisted"
+            [disabled]="!l2Form.valid"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
